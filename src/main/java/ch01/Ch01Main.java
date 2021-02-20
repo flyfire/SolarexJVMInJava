@@ -1,8 +1,5 @@
 package ch01;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,8 +69,8 @@ public class Ch01Main {
     private static Map<Integer, Instruction> parse(String file) {
         List<String> rawLines;
         try {
-            rawLines = Files.readAllLines(Paths.get(file));
-        } catch (IOException e) {
+            rawLines = Files.readAllLines(Ch01Main.class.getClassLoader().getResourceAsStream("ch01/test.bc"));
+        } catch (Exception e) {
             System.out.println("file not found");
             return null;
         }
@@ -129,7 +126,7 @@ public class Ch01Main {
         instructionMap.put(2, new ILoad0Inst());
         instructionMap.put(3, new IReturnInst());
          */
-        Map<Integer, Instruction> instructionMap = parse("test.bc");
+        Map<Integer, Instruction> instructionMap = parse("ch01/test.bc");
         Frame frame = new Frame();
         Interpreter.run(frame, instructionMap);
     }
